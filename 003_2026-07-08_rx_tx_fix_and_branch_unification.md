@@ -88,7 +88,36 @@ git push origin --delete master
 
 ---
 
-## 3. 今後の課題(引き継ぎ)
+## 3. 不要な空ファイルの削除(docs/README調査)
+
+前々回セッション(`002`)のコミットログに、身に覚えのない以下のファイルが
+含まれていることに気づいていたが、中身を未調査のまま保留していた:
+
+```
+docs/README.md
+docs/diary/README.md
+docs/history/README.md
+```
+
+今回、`ls -la`および`cat`で中身を調査した結果、**3つとも中身が完全に空
+(0バイト)** であることを確認した。作成日時は7月7日14:45で、黒画面バグの
+調査中(`ham_control_v02`のディレクトリ操作を試行錯誤していた時間帯)に、
+何らかのコマンドの副産物として作成されたゴミファイルと推測される。
+
+失われる情報がないことを確認した上で、`ham_control_v02`から削除し
+コミット・push済み:
+
+```bash
+cd ~/ham_control_v02
+rm -rf docs/
+git add -A
+git commit -m "Remove empty docs/ placeholder files (leftover from earlier session)"
+git push
+```
+
+---
+
+## 4. 今後の課題(引き継ぎ)
 
 - `config.rs` / `rig.rs` / `wsjtx.rs` / `hamlog.rs` は依然として空のスタブ
 - flrig応答のブロッキング呼び出し(GUIフリーズのリスク)は未対応
